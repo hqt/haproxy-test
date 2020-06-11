@@ -1,0 +1,21 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+    - 3000:3000
+
+  haproxy:
+    container_name: haproxy
+    image: haproxy:2.0.13-alpine
+    restart: on-failure
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy:ro
+    ports:
+      - "80:80"
+      - "443:443"
+
+volumes:
+  socket: {}
